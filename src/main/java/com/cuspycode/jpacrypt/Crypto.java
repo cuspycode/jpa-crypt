@@ -11,14 +11,10 @@ import java.util.Base64;
 
 public class Crypto {
     private SecureRandom rng;
-    private byte[] iv;
 
     public Crypto() {
         this.rng = new SecureRandom();
-        this.iv = new byte[12];
     }
-
-    public byte[] getIV() { return iv; }
 
     private Cipher setup(int mode, byte[] iv, String password) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -34,8 +30,8 @@ public class Crypto {
         return cipher;
     }
 
-    public byte[] encrypt(byte[] plaintext, String password) throws Exception {
-        return setup(Cipher.ENCRYPT_MODE, this.iv, password).doFinal(plaintext);
+    public byte[] encrypt(byte[] plaintext, String password, byte[] iv) throws Exception {
+        return setup(Cipher.ENCRYPT_MODE, iv, password).doFinal(plaintext);
     }
 
     public byte[] decrypt(byte[] cryptext, String password, byte[] iv) throws Exception {
@@ -44,8 +40,9 @@ public class Crypto {
 
     public static String encrypt(String plaintext, String password) throws Exception {
 	Crypto c = new Crypto();
-	byte[] cryptext = c.encrypt(plaintext.getBytes("UTF-8"), password);
-	return (Base64.getEncoder().encodeToString(c.getIV()) +
+	byte[] iv = new byte[12];
+	byte[] cryptext = c.encrypt(plaintext.getBytes("UTF-8"), password, iv);
+	return (Base64.getEncoder().encodeToString(iv) +
 		":" +
 		Base64.getEncoder().encodeToString(cryptext));
     }

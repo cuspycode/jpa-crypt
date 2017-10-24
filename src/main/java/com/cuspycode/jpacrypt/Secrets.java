@@ -12,8 +12,8 @@ public class Secrets implements Serializable {
     private long id;
     private String secret;
 
-    @Column(name = "ID")
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public long getId() { return id; }
     public void setId(long x) { id = x; }
@@ -23,8 +23,13 @@ public class Secrets implements Serializable {
     public void setEncryptedSecret(String x) { secret = x; }
 
     @Transient
-    public String getSecret() throws Exception { return decrypt(getEncryptedSecret(), "swordfish"); }
-    public void setSecret(String x) throws Exception { setEncryptedSecret(encrypt(x, "swordfish")); }
-
+    public String getSecret() throws Exception {
+	String password = ContextListener.getConfig("jpacrypt.password");
+	return decrypt(getEncryptedSecret(), password);
+    }
+    public void setSecret(String x) throws Exception {
+	String password = ContextListener.getConfig("jpacrypt.password");
+	setEncryptedSecret(encrypt(x, password));
+    }
 }
 

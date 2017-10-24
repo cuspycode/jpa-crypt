@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="com.cuspycode.jpacrypt.JPALifecycleListener" %>
+<%@ page import="com.cuspycode.jpacrypt.ContextListener" %>
 <%@ page import="com.cuspycode.jpacrypt.Secrets" %>
 <%@ page import="javax.persistence.EntityManager" %>
 <%@ page import="javax.persistence.EntityTransaction" %>
 <%
-	EntityManager em = JPALifecycleListener.createEntityManager();
+	EntityManager em = ContextListener.createEntityManager();
 
 	// Add a secret
 
