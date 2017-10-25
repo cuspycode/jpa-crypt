@@ -29,7 +29,20 @@ permissions, and the password should have enough entropy to protect against any 
 the derived key is 128 bits, there is no point in having more entropy than that. 128 bits corresponds to about
 22 random alphanumeric characters.
 
+## Reading and writing to the database
+
 The calls to the encryption and decryption methods happen in the entity class `Secrets.java`. A special getter
 and setter method marked `@Transient` perform encryption and decryption respectively, before calling the entity
 getter and setter. The annotation `@Transient` stops JPA from trying to map the getter and setter pair to an
 SQL column.
+
+The encrypted data is stored in the SQL column named `SECRET` as `{IV}:{ENCRYPTED}`, where `{ENCRYPTED}` and
+`{IV}` are the Base64 encodings of the encrypted message and its Initialization Vector, respectively. 
+
+The default SQL type for the column is `VARCHAR`, but this can be changed to a "large object" character type
+by adding the `@Lob` annotation to the getter and setter pair.
+
+## The master password
+
+The master password is stored in `WEB-INF/config.properties`. This is just for convenience when trying it out.
+The file path can be reconfigured by editing `ContextListener.java`.
