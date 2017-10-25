@@ -26,8 +26,9 @@ but by using this method the application can provide a password of arbitrary len
 and also makes it easier to change from AES-GCM to an algorithm that uses a different key length. In this
 example, the application reads the password from a properties file. This properties file should have restricted
 permissions, and the password should have enough entropy to protect against any anticipated threats. But since
-the derived key is 128 bits, there is no point in having more entropy than that. 128 bits corresponds to about
-22 random alphanumeric characters.
+the derived key is 128 bits (or slightly less, since there is a non-zero probability of hash collisions), there
+is no point in having more entropy than that in the password. 128 bits corresponds to about 22 random alphanumeric
+characters.
 
 ## Reading and writing to the database
 
