@@ -16,7 +16,7 @@ or 2 (`DECRYPT_MODE`).
 The `iv` argument is the Initialization Vector, which is a small set of random bits that are used to initialize the
 state of the cipher algorithm before it starts encrypting the plaintext. The Initialization Vector must be different
 for each encrypted message, otherwise the encryption may be significantly weakened or broken whenever two different
-plaintext messages share a common prefix. This requirement is fulfilled by having "setup" generate a new random
+plaintext messages share a common prefix. This requirement is fulfilled by having `setup` generate a new random
 Initialization Vector each time a new message is encrypted.
 
 The `password` argument is a string that is provided by the application. It is used to derive the encryption
