@@ -47,3 +47,7 @@ by adding the `@Lob` annotation to the getter and setter pair.
 
 The master password is stored in `WEB-INF/config.properties`. This is just for convenience when trying it out.
 The file path can be reconfigured by editing `ContextListener.java`.
+
+## Security note
+
+This example code uses H2 version 1.4.196 as the database. That H2 version is vulnerable to CVE-2021-42392 if the H2 console servlet is deployed and made available without security constraints to random dudes on the Internet. So don't do that.
